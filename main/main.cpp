@@ -770,6 +770,7 @@ Error Main::test_setup() {
 	register_early_core_singletons();
 	initialize_modules(MODULE_INITIALIZATION_LEVEL_CORE);
 	register_core_extensions();
+	extension_load_extensions(); // Load GDExtensions that are not embedded
 
 	register_core_singletons();
 
@@ -899,7 +900,9 @@ void Main::test_cleanup() {
 
 	if (packed_data) {
 		memdelete(packed_data);
+		packed_data = nullptr;
 	}
+	zip_packed_data = nullptr;
 	if (translation_server) {
 		memdelete(translation_server);
 	}
@@ -2024,6 +2027,10 @@ Error Main::setup(const char *execpath, int argc, char *argv[], bool p_second_ph
 	}
 #endif // defined(DEBUG_ENABLED) || defined (TOOLS_ENABLED)
 
+	register_early_core_singletons();
+	initialize_modules(MODULE_INITIALIZATION_LEVEL_CORE);
+	register_core_extensions(); // core extensions registered realy early for embded extensions to override the project settings
+
 	OS::get_singleton()->_in_editor = editor;
 	if (globals->setup(project_path, main_pack, false, editor) == OK) {
 #ifdef TOOLS_ENABLED
@@ -2197,9 +2204,7 @@ Error Main::setup(const char *execpath, int argc, char *argv[], bool p_second_ph
 		OS::get_singleton()->_verbose_stdout = GLOBAL_GET("debug/settings/stdout/verbose_stdout");
 	}
 
-	register_early_core_singletons();
-	initialize_modules(MODULE_INITIALIZATION_LEVEL_CORE);
-	register_core_extensions(); // core extensions must be registered after globals setup and before display
+	extension_load_extensions(); // Load GDExtensions that are not embedded
 
 	if (!editor) {
 		ResourceUID::get_singleton()->enable_reverse_cache();
@@ -2893,7 +2898,9 @@ error:
 	}
 	if (packed_data) {
 		memdelete(packed_data);
+		packed_data = nullptr;
 	}
+	zip_packed_data = nullptr;
 
 	unregister_core_driver_types();
 	unregister_core_extensions();
@@ -4623,7 +4630,7 @@ int Main::start() {
 			// Load SSL Certificates from Project Settings (or builtin).
 			Crypto::load_default_certificates(GLOBAL_GET("network/tls/certificate_bundle_override"));
 
-			if (!game_path.is_empty()) {
+			if (!game_path.is_empty() && !CoreGlobals::run_global_world_init_function()) {
 				Node *scene = nullptr;
 				Ref<PackedScene> scenedata = ResourceLoader::load(local_game_path);
 				if (scenedata.is_valid()) {
@@ -4807,6 +4814,8 @@ bool Main::iteration() {
 	}
 
 	bool exit = false;
+
+	CoreGlobals::run_global_update_function();
 
 	// process all our active interfaces
 #ifndef XR_DISABLED
@@ -5164,16 +5173,19 @@ void Main::cleanup(bool p_force) {
 #ifndef XR_DISABLED
 	if (xr_server) {
 		memdelete(xr_server);
+		xr_server = nullptr;
 	}
 #endif // XR_DISABLED
 
 	if (audio_server) {
 		audio_server->finish();
 		memdelete(audio_server);
+		audio_server = nullptr;
 	}
 
 	if (camera_server) {
 		memdelete(camera_server);
+		camera_server = nullptr;
 	}
 
 	OS::get_singleton()->finalize();
@@ -5182,35 +5194,47 @@ void Main::cleanup(bool p_force) {
 
 	if (input) {
 		memdelete(input);
+		input = nullptr;
 	}
 
 	if (packed_data) {
 		memdelete(packed_data);
+		packed_data = nullptr;
 	}
+	// zip_packed_data was deleted by PackedData destructor (it owns sources),
+	// clear our reference to avoid dangling pointer on restart.
+	zip_packed_data = nullptr;
 	if (performance) {
 		memdelete(performance);
+		performance = nullptr;
 	}
 	if (input_map) {
 		memdelete(input_map);
+		input_map = nullptr;
 	}
 	if (translation_server) {
 		memdelete(translation_server);
+		translation_server = nullptr;
 	}
 	if (tsman) {
 		memdelete(tsman);
+		tsman = nullptr;
 	}
 #ifndef PHYSICS_3D_DISABLED
 	if (physics_server_3d_manager) {
 		memdelete(physics_server_3d_manager);
+		physics_server_3d_manager = nullptr;
 	}
 #endif // PHYSICS_3D_DISABLED
 #ifndef PHYSICS_2D_DISABLED
 	if (physics_server_2d_manager) {
 		memdelete(physics_server_2d_manager);
+		physics_server_2d_manager = nullptr;
 	}
 #endif // PHYSICS_2D_DISABLED
 	if (globals) {
 		memdelete(globals);
+		globals = nullptr;
 	}
 
 	if (OS::get_singleton()->is_restart_on_exit_set()) {
@@ -5236,6 +5260,7 @@ void Main::cleanup(bool p_force) {
 
 	if (engine) {
 		memdelete(engine);
+		engine = nullptr;
 	}
 
 	unregister_core_types();

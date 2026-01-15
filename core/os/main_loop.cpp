@@ -69,6 +69,8 @@ bool MainLoop::process(double p_time) {
 void MainLoop::finalize() {
 	GDVIRTUAL_CALL(_finalize);
 
+	CoreGlobals::run_global_end_function();
+
 	if (get_script_instance()) {
 		set_script(Variant()); //clear script
 	}

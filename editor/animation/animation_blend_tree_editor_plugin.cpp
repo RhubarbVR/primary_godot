@@ -1214,6 +1214,10 @@ void AnimationNodeBlendTreeEditor::edit(const Ref<AnimationNode> &p_node) {
 	graph->set_show_arrange_button(!read_only);
 }
 
+AnimationNodeBlendTreeEditor::~AnimationNodeBlendTreeEditor(){
+	singleton = nullptr;
+}
+
 AnimationNodeBlendTreeEditor::AnimationNodeBlendTreeEditor() {
 	singleton = this;
 	updating = false;

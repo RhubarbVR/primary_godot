@@ -2076,6 +2076,13 @@ bool Engine::is_printing_error_messages() const {
 	return ::Engine::get_singleton()->is_printing_error_messages();
 }
 
+void Engine::register_init_functions(int64_t project_settings_function, int64_t world_init_function, int64_t update_function, int64_t end_function) const {
+	CoreGlobals::global_end_function = reinterpret_cast<GDRunFunction>(end_function);
+	CoreGlobals::global_update_function = reinterpret_cast<GDRunFunction>(update_function);
+	CoreGlobals::global_world_init_function = reinterpret_cast<GDRunFunction>(world_init_function);
+	CoreGlobals::global_project_settings_function = reinterpret_cast<GDInitFunction>(project_settings_function);
+}
+
 #ifdef TOOLS_ENABLED
 void Engine::get_argument_options(const StringName &p_function, int p_idx, List<String> *r_options) const {
 	const String pf = p_function;
@@ -2089,6 +2096,7 @@ void Engine::get_argument_options(const StringName &p_function, int p_idx, List<
 #endif
 
 void Engine::_bind_methods() {
+	ClassDB::bind_method(D_METHOD("register_init_functions", "project_settings_function", "world_init_function", "update_function", "end_function"), &Engine::register_init_functions);
 	ClassDB::bind_method(D_METHOD("set_physics_ticks_per_second", "physics_ticks_per_second"), &Engine::set_physics_ticks_per_second);
 	ClassDB::bind_method(D_METHOD("get_physics_ticks_per_second"), &Engine::get_physics_ticks_per_second);
 	ClassDB::bind_method(D_METHOD("set_max_physics_steps_per_frame", "max_physics_steps"), &Engine::set_max_physics_steps_per_frame);
@@ -2296,6 +2304,7 @@ EngineDebugger::~EngineDebugger() {
 		::EngineDebugger::unregister_message_capture(E.key);
 	}
 	captures.clear();
+	singleton = nullptr;
 }
 
 void EngineDebugger::_bind_methods() {

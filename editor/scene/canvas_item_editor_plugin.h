@@ -617,6 +617,7 @@ public:
 
 	EditorSelection *editor_selection = nullptr;
 
+	~CanvasItemEditor();
 	CanvasItemEditor();
 };
 

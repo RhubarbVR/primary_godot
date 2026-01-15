@@ -124,6 +124,7 @@ public:
 	void remove_expanded_editor();
 	void register_split(SplitContainer *p_split);
 
+	~TileSetEditor();
 	TileSetEditor();
 };
 

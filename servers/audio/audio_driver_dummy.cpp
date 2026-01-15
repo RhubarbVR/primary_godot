@@ -148,3 +148,7 @@ void AudioDriverDummy::finish() {
 AudioDriverDummy::AudioDriverDummy() {
 	singleton = this;
 }
+
+AudioDriverDummy::~AudioDriverDummy() {
+	singleton = nullptr;
+}

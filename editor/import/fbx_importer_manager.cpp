@@ -134,6 +134,10 @@ void FBXImporterManager::_browse_install() {
 
 FBXImporterManager *FBXImporterManager::singleton = nullptr;
 
+FBXImporterManager::~FBXImporterManager() {
+	singleton = nullptr;
+}
+
 FBXImporterManager::FBXImporterManager() {
 	singleton = this;
 

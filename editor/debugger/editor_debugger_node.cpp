@@ -61,6 +61,10 @@ void _for_all(TabContainer *p_node, const Func &p_func) {
 
 EditorDebuggerNode *EditorDebuggerNode::singleton = nullptr;
 
+EditorDebuggerNode::~EditorDebuggerNode() {
+	singleton = nullptr;
+}
+
 EditorDebuggerNode::EditorDebuggerNode() {
 	set_name(TTRC("Debugger"));
 	set_icon_name("Debug");

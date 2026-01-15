@@ -682,6 +682,10 @@ void ProjectSettingsEditor::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("_update_action_map_editor"), &ProjectSettingsEditor::_update_action_map_editor);
 }
 
+ProjectSettingsEditor::~ProjectSettingsEditor(){
+	singleton = nullptr;
+}
+
 ProjectSettingsEditor::ProjectSettingsEditor(EditorData *p_data) {
 	singleton = this;
 	set_title(TTRC("Project Settings (project.godot)"));

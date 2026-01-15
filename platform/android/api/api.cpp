@@ -128,4 +128,8 @@ JavaClassWrapper::JavaClassWrapper() {
 	singleton = this;
 }
 
+JavaClassWrapper::~JavaClassWrapper() {
+	singleton = nullptr;
+}
+
 #endif

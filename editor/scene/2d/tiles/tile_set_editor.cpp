@@ -806,6 +806,10 @@ void TileSetEditor::register_split(SplitContainer *p_split) {
 	disable_on_expand.push_back(p_split);
 }
 
+TileSetEditor::~TileSetEditor() {
+	singleton = nullptr;
+}
+
 TileSetEditor::TileSetEditor() {
 	singleton = this;
 	set_name(TTRC("TileSet"));

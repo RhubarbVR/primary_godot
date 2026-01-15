@@ -5564,6 +5564,10 @@ void CanvasItemEditor::center_at(const Point2 &p_pos) {
 	update_viewport();
 }
 
+CanvasItemEditor::~CanvasItemEditor() {
+	singleton = nullptr;
+}
+
 CanvasItemEditor::CanvasItemEditor() {
 	snap_target[0] = SNAP_TARGET_NONE;
 	snap_target[1] = SNAP_TARGET_NONE;

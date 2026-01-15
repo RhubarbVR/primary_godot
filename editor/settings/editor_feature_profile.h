@@ -186,5 +186,6 @@ public:
 	void notify_changed();
 
 	static EditorFeatureProfileManager *get_singleton() { return singleton; }
+	~EditorFeatureProfileManager();
 	EditorFeatureProfileManager();
 };

@@ -1543,6 +1543,10 @@ void LiveEditor::_reparent_node_func(const NodePath &p_at, const NodePath &p_new
 	}
 }
 
+LiveEditor::~LiveEditor() {
+	singleton = nullptr;
+}
+
 /// RuntimeNodeSelect
 RuntimeNodeSelect *RuntimeNodeSelect::get_singleton() {
 	return singleton;
@@ -1558,6 +1562,8 @@ RuntimeNodeSelect::~RuntimeNodeSelect() {
 		RS::get_singleton()->free_rid(sbox_2d_ci);
 		RS::get_singleton()->free_rid(draw_canvas);
 	}
+
+	singleton = nullptr;
 }
 
 void RuntimeNodeSelect::_setup(const Dictionary &p_settings) {

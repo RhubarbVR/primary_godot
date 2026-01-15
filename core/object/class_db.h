@@ -202,6 +202,8 @@ public:
 		};
 	};
 
+	//Tracker to see if classes has been clearted
+	static uint8_t classes_initialization_checker;
 	static HashMap<StringName, ClassInfo> classes;
 	static HashMap<StringName, StringName> resource_base_extensions;
 	static HashMap<StringName, StringName> compat_classes;

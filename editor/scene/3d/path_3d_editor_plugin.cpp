@@ -893,6 +893,10 @@ void Path3DEditorPlugin::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("_restore_curve_points"), &Path3DEditorPlugin::_restore_curve_points);
 }
 
+Path3DEditorPlugin::~Path3DEditorPlugin() {
+	singleton = nullptr;
+}
+
 Path3DEditorPlugin::Path3DEditorPlugin() {
 	singleton = this;
 	mirror_handle_angle = true;

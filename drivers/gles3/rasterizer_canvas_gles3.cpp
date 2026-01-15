@@ -2895,7 +2895,6 @@ void fragment() {
 }
 
 RasterizerCanvasGLES3::~RasterizerCanvasGLES3() {
-	singleton = nullptr;
 
 	GLES3::MaterialStorage *material_storage = GLES3::MaterialStorage::get_singleton();
 	material_storage->shaders.canvas_shader.version_free(data.canvas_shader_default_version);

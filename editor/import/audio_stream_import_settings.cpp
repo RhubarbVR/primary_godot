@@ -559,6 +559,10 @@ void AudioStreamImportSettingsDialog::_reimport() {
 	EditorFileSystem::get_singleton()->reimport_file_with_custom_parameters(path, importer, params);
 }
 
+AudioStreamImportSettingsDialog::~AudioStreamImportSettingsDialog() {
+	singleton = nullptr;
+}
+
 AudioStreamImportSettingsDialog::AudioStreamImportSettingsDialog() {
 	get_ok_button()->set_text(TTR("Reimport"));
 	get_cancel_button()->set_text(TTR("Close"));

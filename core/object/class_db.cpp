@@ -62,6 +62,7 @@ ClassDB::APIType ClassDB::get_current_api() {
 	return current_api;
 }
 
+uint8_t ClassDB::classes_initialization_checker = 0;
 HashMap<StringName, ClassDB::ClassInfo> ClassDB::classes;
 HashMap<StringName, StringName> ClassDB::resource_base_extensions;
 HashMap<StringName, StringName> ClassDB::compat_classes;
@@ -2438,6 +2439,11 @@ void ClassDB::cleanup() {
 	}
 
 	classes.clear();
+	classes_initialization_checker++; //increment index so that classes know if there initialized after restart
+	if (classes_initialization_checker == 0xFF) {
+		classes_initialization_checker = 0; //Loop back to zero to allow more restarts
+	}
+
 	resource_base_extensions.clear();
 	compat_classes.clear();
 	native_structs.clear();
@@ -2450,6 +2456,8 @@ void ClassDB::cleanup() {
 		*type = nullptr;
 	}
 	gdtype_autorelease_pool.clear();
+
+	current_api = API_CORE;
 }
 
 // Array to use in optional parameters on methods and the DEFVAL_ARRAY macro.

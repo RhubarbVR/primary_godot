@@ -101,5 +101,6 @@ public:
 
 	Ref<AudioStreamPreview> generate_preview(const Ref<AudioStream> &p_stream);
 
+	~AudioStreamPreviewGenerator();
 	AudioStreamPreviewGenerator();
 };

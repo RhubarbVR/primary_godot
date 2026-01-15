@@ -35,6 +35,11 @@
 #include "core/os/main_loop.h"
 #include "drivers/unix/os_unix.h"
 #include "servers/audio/audio_server.h"
+#include <jni.h>
+
+extern "C" {
+	JNIEXPORT void libgodot_register_function(GDExtensionInitializationFunction p_init_func);
+}
 
 class GodotJavaWrapper;
 class GodotIOJavaWrapper;

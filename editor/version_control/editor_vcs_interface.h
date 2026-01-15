@@ -131,6 +131,8 @@ public:
 	static EditorVCSInterface *get_singleton();
 	static void set_singleton(EditorVCSInterface *p_singleton);
 
+	~EditorVCSInterface();
+
 	enum class VCSMetadata {
 		NONE,
 		GIT,

@@ -293,6 +293,10 @@ void RunInstancesDialog::apply_custom_features(int p_instance_idx) {
 	OS::get_singleton()->set_environment("GODOT_EDITOR_CUSTOM_FEATURES", String(",").join(stripped_features));
 }
 
+RunInstancesDialog::~RunInstancesDialog() {
+	singleton = nullptr;
+}
+
 RunInstancesDialog::RunInstancesDialog() {
 	singleton = this;
 	set_title(TTR("Run Instances"));

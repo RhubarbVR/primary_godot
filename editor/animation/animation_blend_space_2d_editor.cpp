@@ -886,6 +886,10 @@ void AnimationNodeBlendSpace2DEditor::_bind_methods() {
 
 AnimationNodeBlendSpace2DEditor *AnimationNodeBlendSpace2DEditor::singleton = nullptr;
 
+AnimationNodeBlendSpace2DEditor::~AnimationNodeBlendSpace2DEditor() {
+	singleton = nullptr;
+}
+
 AnimationNodeBlendSpace2DEditor::AnimationNodeBlendSpace2DEditor() {
 	singleton = this;
 	updating = false;

@@ -2061,6 +2061,10 @@ void AnimationNodeStateMachineEditor::_bind_methods() {
 
 AnimationNodeStateMachineEditor *AnimationNodeStateMachineEditor::singleton = nullptr;
 
+AnimationNodeStateMachineEditor::~AnimationNodeStateMachineEditor() {
+	singleton = nullptr;
+}
+
 AnimationNodeStateMachineEditor::AnimationNodeStateMachineEditor() {
 	singleton = this;
 

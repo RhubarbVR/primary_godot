@@ -1998,4 +1998,8 @@ SceneImportSettingsDialog::SceneImportSettingsDialog() {
 SceneImportSettingsDialog::~SceneImportSettingsDialog() {
 	memdelete(scene_import_settings_data);
 	memdelete(_resource_importer_scene);
+	scene_import_settings_data = nullptr;
+	_resource_importer_scene = nullptr;
+
+	singleton = nullptr;
 }

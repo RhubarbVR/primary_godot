@@ -169,5 +169,6 @@ public:
 	void open_settings(const String &p_path);
 	static DynamicFontImportSettingsDialog *get_singleton();
 
+	~DynamicFontImportSettingsDialog();
 	DynamicFontImportSettingsDialog();
 };

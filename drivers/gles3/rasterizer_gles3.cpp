@@ -226,6 +226,22 @@ void RasterizerGLES3::finalize() {
 	memdelete(texture_storage);
 	memdelete(utilities);
 	memdelete(config);
+	scene = nullptr;
+	canvas = nullptr;
+	gi = nullptr;
+	fog = nullptr;
+	post_effects = nullptr;
+	glow = nullptr;
+	cubemap_filter = nullptr;
+	copy_effects = nullptr;
+	feed_effects = nullptr;
+	light_storage = nullptr;
+	particles_storage = nullptr;
+	mesh_storage = nullptr;
+	material_storage = nullptr;
+	texture_storage = nullptr;
+	utilities = nullptr;
+	config = nullptr;
 }
 
 RasterizerGLES3 *RasterizerGLES3::singleton = nullptr;
@@ -380,6 +396,7 @@ RasterizerGLES3::RasterizerGLES3() {
 }
 
 RasterizerGLES3::~RasterizerGLES3() {
+	singleton = nullptr;
 }
 
 void RasterizerGLES3::_blit_render_target_to_screen(DisplayServer::WindowID p_screen, const BlitToScreen &p_blit, bool p_first) {

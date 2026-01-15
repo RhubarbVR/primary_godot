@@ -7138,14 +7138,17 @@ DisplayServerWindows::DisplayServerWindows(const String &p_rendering_driver, Win
 	if (comctl32) {
 		typedef BOOL(WINAPI * InitCommonControlsExPtr)(_In_ const INITCOMMONCONTROLSEX *picce);
 		InitCommonControlsExPtr init_common_controls_ex = (InitCommonControlsExPtr)(void *)GetProcAddress(comctl32, "InitCommonControlsEx");
-
+		static bool common_controls_initialized = false;
 		// Fails if the incorrect version was loaded. Probably not a big enough deal to print an error about.
-		if (init_common_controls_ex) {
+		if (!common_controls_initialized && init_common_controls_ex) {
 			INITCOMMONCONTROLSEX icc = {};
 			icc.dwICC = ICC_STANDARD_CLASSES;
 			icc.dwSize = sizeof(INITCOMMONCONTROLSEX);
 			if (!init_common_controls_ex(&icc)) {
 				WARN_PRINT("Unable to initialize Windows common controls. Native dialogs may not work properly.");
+			}
+			else {
+				common_controls_initialized = true;
 			}
 		}
 		FreeLibrary(comctl32);
@@ -7770,4 +7773,6 @@ DisplayServerWindows::~DisplayServerWindows() {
 	}
 
 	OleUninitialize();
+
+	UnregisterClassW(wc.lpszClassName, wc.hInstance);
 }

@@ -1268,4 +1268,7 @@ DebugAdapterProtocol::DebugAdapterProtocol() {
 
 DebugAdapterProtocol::~DebugAdapterProtocol() {
 	memdelete(parser);
+	parser = nullptr;
+
+	singleton = nullptr;
 }

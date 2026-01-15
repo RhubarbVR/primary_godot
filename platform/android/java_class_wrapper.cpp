@@ -1700,6 +1700,10 @@ Ref<JavaClass> JavaClassWrapper::wrap_jclass(jclass p_class, bool p_allow_non_pu
 
 JavaClassWrapper *JavaClassWrapper::singleton = nullptr;
 
+JavaClassWrapper::~JavaClassWrapper() {
+	singleton = nullptr;
+}
+
 JavaClassWrapper::JavaClassWrapper() {
 	singleton = this;
 

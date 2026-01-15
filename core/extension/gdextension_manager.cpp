@@ -36,6 +36,8 @@
 #include "core/io/dir_access.h"
 #include "core/io/file_access.h"
 #include "core/object/script_language.h"
+#include "core/core_globals.h"
+
 
 GDExtensionManager::LoadStatus GDExtensionManager::_load_extension_internal(const Ref<GDExtension> &p_extension, bool p_first_load) {
 	if (level >= 0) { // Already initialized up to some level.
@@ -315,6 +317,15 @@ void GDExtensionManager::_reload_all_scripts() {
 	}
 }
 #endif // TOOLS_ENABLED
+
+void GDExtensionManager::load_enbded_extension() {
+	if (CoreGlobals::global_init_func_libgodot != nullptr) {
+		GDExtensionConstPtr<const GDExtensionInitializationFunction> ptr((const GDExtensionInitializationFunction *)&CoreGlobals::global_init_func_libgodot);
+		CoreGlobals::global_load_status_libgodot = load_extension_from_function("libgodot://main", ptr);
+	} else {
+		CoreGlobals::global_load_status_libgodot = LOAD_STATUS_FAILED;
+	}
+}
 
 void GDExtensionManager::load_extensions() {
 	if (Engine::get_singleton()->is_recovery_mode_hint()) {

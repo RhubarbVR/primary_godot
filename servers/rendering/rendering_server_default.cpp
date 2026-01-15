@@ -264,6 +264,21 @@ void RenderingServerDefault::_finish() {
 	memdelete(RSG::rasterizer);
 	memdelete(RSG::scene);
 	memdelete(RSG::camera_attributes);
+	RSG::utilities = nullptr;
+	RSG::light_storage = nullptr;
+	RSG::material_storage = nullptr;
+	RSG::mesh_storage = nullptr;
+	RSG::particles_storage = nullptr;
+	RSG::texture_storage = nullptr;
+	RSG::gi = nullptr;
+	RSG::fog = nullptr;
+	RSG::camera_attributes = nullptr;
+	RSG::canvas_render = nullptr;
+	RSG::rasterizer = nullptr;
+
+	RSG::canvas = nullptr;
+	RSG::viewport = nullptr;
+	RSG::scene = nullptr;
 }
 
 void RenderingServerDefault::init() {

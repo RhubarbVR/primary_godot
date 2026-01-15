@@ -164,15 +164,26 @@ void RendererCompositorRD::initialize() {
 uint64_t RendererCompositorRD::frame = 1;
 
 void RendererCompositorRD::finalize() {
+	// Destroy rendering systems in dependency order.
+	// Scene cleanup calls Fog::free_fog_shader() which needs fog and material_storage.
 	memdelete(scene);
+	scene = nullptr;
 	memdelete(canvas);
+	canvas = nullptr;
 	memdelete(fog);
+	fog = nullptr;
 	memdelete(particles_storage);
+	particles_storage = nullptr;
 	memdelete(light_storage);
+	light_storage = nullptr;
 	memdelete(mesh_storage);
+	mesh_storage = nullptr;
 	memdelete(material_storage);
+	material_storage = nullptr;
 	memdelete(texture_storage);
+	texture_storage = nullptr;
 	memdelete(utilities);
+	utilities = nullptr;
 
 	//only need to erase these, the rest are erased by cascade
 	blit.shader.version_free(blit.shader_version);

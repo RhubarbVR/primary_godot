@@ -337,6 +337,10 @@ EditorCommandPalette *EditorCommandPalette::get_singleton() {
 	return singleton;
 }
 
+EditorCommandPalette::~EditorCommandPalette() {
+	singleton = nullptr;
+}
+
 EditorCommandPalette::EditorCommandPalette() {
 	set_hide_on_ok(false);
 	connect(SceneStringName(confirmed), callable_mp(this, &EditorCommandPalette::_confirmed));

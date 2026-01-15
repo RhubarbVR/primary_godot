@@ -1372,3 +1372,7 @@ EditorBuildProfileManager::EditorBuildProfileManager() {
 
 	singleton = this;
 }
+
+EditorBuildProfileManager::~EditorBuildProfileManager() {
+	singleton = nullptr;
+}

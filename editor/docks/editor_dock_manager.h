@@ -158,6 +158,7 @@ public:
 	void add_dock(EditorDock *p_dock);
 	void remove_dock(EditorDock *p_dock);
 
+	~EditorDockManager();
 	EditorDockManager();
 };
 

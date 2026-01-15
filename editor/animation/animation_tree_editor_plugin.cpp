@@ -258,6 +258,10 @@ Vector<String> AnimationTreeEditor::get_animation_list() {
 	return ret;
 }
 
+AnimationTreeEditor::~AnimationTreeEditor() {
+	singleton = nullptr;
+}
+
 AnimationTreeEditor::AnimationTreeEditor() {
 	singleton = this;
 	AnimationNodeAnimation::get_editable_animation_list = get_animation_list;

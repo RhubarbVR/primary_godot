@@ -164,6 +164,7 @@ public:
 	virtual Error rename_dependencies(const String &p_path, const HashMap<String, String> &p_map) override;
 
 	ResourceFormatLoaderText() { singleton = this; }
+	~ResourceFormatLoaderText() { singleton = nullptr; }
 };
 
 class ResourceFormatSaverTextInstance {
@@ -218,4 +219,5 @@ public:
 	virtual void get_recognized_extensions(const Ref<Resource> &p_resource, List<String> *p_extensions) const override;
 
 	ResourceFormatSaverText();
+	~ResourceFormatSaverText();
 };

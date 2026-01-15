@@ -42,6 +42,8 @@ static GodotInstance *instance = nullptr;
 GDExtensionObjectPtr libgodot_create_godot_instance(int p_argc, char *p_argv[], GDExtensionInitializationFunction p_init_func) {
 	ERR_FAIL_COND_V_MSG(instance != nullptr, nullptr, "Only one Godot Instance may be created at a time.");
 
+	CoreGlobals::global_init_func_libgodot = p_init_func;
+
 	os = new OS_Windows(GetModuleHandle(nullptr));
 
 	Error err = Main::setup(p_argv[0], p_argc - 1, &p_argv[1], false);
@@ -50,7 +52,7 @@ GDExtensionObjectPtr libgodot_create_godot_instance(int p_argc, char *p_argv[], 
 	}
 
 	instance = memnew(GodotInstance);
-	if (!instance->initialize(p_init_func)) {
+	if (!instance->initialize()) {
 		memdelete(instance);
 		instance = nullptr;
 		return nullptr;
@@ -64,8 +66,7 @@ void libgodot_destroy_godot_instance(GDExtensionObjectPtr p_godot_instance) {
 	if (instance == godot_instance) {
 		godot_instance->stop();
 		memdelete(godot_instance);
-		// Note: When Godot Engine supports reinitialization, clear the instance pointer here.
-		//instance = nullptr;
+		instance = nullptr;
 		Main::cleanup();
 	}
 }

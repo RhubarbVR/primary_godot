@@ -967,6 +967,10 @@ DynamicFontImportSettingsDialog *DynamicFontImportSettingsDialog::get_singleton(
 	return singleton;
 }
 
+DynamicFontImportSettingsDialog::~DynamicFontImportSettingsDialog() {
+	singleton = nullptr;
+}
+
 DynamicFontImportSettingsDialog::DynamicFontImportSettingsDialog() {
 	singleton = this;
 

@@ -91,5 +91,6 @@ public:
 	bool has_preset_with_name(const String &p_name, int p_exclude_index = -1) const;
 	void connect_presets_runnable_updated(const Callable &p_target);
 
+	~EditorExport();
 	EditorExport();
 };

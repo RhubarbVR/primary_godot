@@ -30,6 +30,12 @@
 
 #pragma once
 
+#include "core/extension/gdextension_interface.gen.h"
+
+typedef void (*GDRunFunction)();
+typedef GDExtensionBool (*GDInitFunction)();
+
+
 // Home for state needed from global functions
 // that cannot be stored in Engine or OS due to e.g. circular includes
 
@@ -38,4 +44,42 @@ public:
 	static inline bool leak_reporting_enabled = true;
 	static inline bool print_line_enabled = true;
 	static inline bool print_error_enabled = true;
+
+	static inline GDInitFunction global_project_settings_function = nullptr;
+	static inline GDRunFunction global_world_init_function = nullptr;
+	static inline GDRunFunction global_update_function = nullptr;
+	static inline GDRunFunction global_end_function = nullptr;
+
+	static inline bool run_global_project_settings_function() {
+		if (global_project_settings_function == nullptr) {
+			return false;
+		}
+		return global_project_settings_function();
+	}
+
+	static inline bool run_global_world_init_function() {
+		if (global_world_init_function == nullptr) {
+			return false;
+		}
+		global_world_init_function();
+		return true;
+	}
+
+	static inline void run_global_update_function() {
+		if (global_update_function == nullptr) {
+			return;
+		}
+		global_update_function();
+	}
+
+	
+	static inline void run_global_end_function() {
+		if (global_end_function == nullptr) {
+			return;
+		}
+		global_end_function();
+	}
+
+	static inline GDExtensionInitializationFunction global_init_func_libgodot = nullptr;
+	static inline int32_t global_load_status_libgodot = 0;
 };

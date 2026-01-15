@@ -1039,6 +1039,10 @@ PopupMenu *EditorDockManager::get_docks_menu() {
 	return docks_menu;
 }
 
+EditorDockManager::~EditorDockManager() {
+	singleton = nullptr;
+}
+
 EditorDockManager::EditorDockManager() {
 	singleton = this;
 

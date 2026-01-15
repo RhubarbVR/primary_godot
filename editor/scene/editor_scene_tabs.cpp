@@ -422,6 +422,10 @@ void EditorSceneTabs::_bind_methods() {
 	ADD_SIGNAL(MethodInfo("tab_closed", PropertyInfo(Variant::INT, "tab_index")));
 }
 
+EditorSceneTabs::~EditorSceneTabs() {
+	singleton = nullptr;
+}
+
 EditorSceneTabs::EditorSceneTabs() {
 	singleton = this;
 

@@ -483,6 +483,10 @@ void EditorExport::connect_presets_runnable_updated(const Callable &p_target) {
 	connect(_export_presets_runnable_updated, p_target);
 }
 
+EditorExport::~EditorExport() {
+	singleton = nullptr;
+}
+
 EditorExport::EditorExport() {
 	save_timer = memnew(Timer);
 	add_child(save_timer);

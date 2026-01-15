@@ -62,6 +62,10 @@ static ShaderLanguage::BuiltInInfo constvt(ShaderLanguage::DataType p_type, cons
 	return ShaderLanguage::BuiltInInfo(p_type, true, p_values);
 }
 
+ShaderTypes::~ShaderTypes() {
+	singleton = nullptr;
+}
+
 ShaderTypes::ShaderTypes() {
 	singleton = this;
 

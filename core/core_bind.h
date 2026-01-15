@@ -86,6 +86,7 @@ public:
 	Vector<String> list_directory(const String &p_directory);
 
 	ResourceLoader() { singleton = this; }
+	~ResourceLoader() { singleton = nullptr; }
 };
 
 class ResourceSaver : public Object {
@@ -118,6 +119,7 @@ public:
 	ResourceUID::ID get_resource_id_for_path(const String &p_path, bool p_generate = false);
 
 	ResourceSaver() { singleton = this; }
+	~ResourceSaver() { singleton = nullptr; }
 };
 
 class Logger : public RefCounted {
@@ -383,6 +385,7 @@ public:
 	TypedArray<Point2i> bresenham_line(const Point2i &p_from, const Point2i &p_to);
 
 	Geometry2D() { singleton = this; }
+	~Geometry2D() { singleton = nullptr; }
 };
 
 class Geometry3D : public Object {
@@ -414,6 +417,7 @@ public:
 	Vector<int32_t> tetrahedralize_delaunay(const Vector<Vector3> &p_points);
 
 	Geometry3D() { singleton = this; }
+	~Geometry3D() { singleton = nullptr; }	
 };
 
 class Marshalls : public Object {
@@ -633,11 +637,14 @@ public:
 	void set_print_error_messages(bool p_enabled);
 	bool is_printing_error_messages() const;
 
+	void register_init_functions(int64_t project_settings_function, int64_t world_init_function, int64_t update_function, int64_t end_function) const;
+
 #ifdef TOOLS_ENABLED
 	virtual void get_argument_options(const StringName &p_function, int p_idx, List<String> *r_options) const override;
 #endif
 
 	Engine() { singleton = this; }
+	~Engine() { singleton = nullptr; }
 };
 
 class EngineDebugger : public Object {

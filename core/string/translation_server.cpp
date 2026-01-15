@@ -783,3 +783,7 @@ TranslationServer::TranslationServer() {
 
 	init_locale_info();
 }
+
+TranslationServer::~TranslationServer() {
+	singleton = nullptr;
+}

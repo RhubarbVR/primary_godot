@@ -174,12 +174,13 @@ Pair<ShaderRD *, RID> SkyRD::SkyShaderData::get_native_shader_and_version() cons
 }
 
 SkyRD::SkyShaderData::~SkyShaderData() {
+	//pipeline variants will clear themselves if shader is gone
+	if (!version.is_valid()) {
+		return; // Already freed or never initialized.
+	}
 	RendererSceneRenderRD *scene_singleton = static_cast<RendererSceneRenderRD *>(RendererSceneRenderRD::singleton);
 	ERR_FAIL_NULL(scene_singleton);
-	//pipeline variants will clear themselves if shader is gone
-	if (version.is_valid()) {
-		scene_singleton->sky.sky_shader.shader.version_free(version);
-	}
+	scene_singleton->sky.sky_shader.shader.version_free(version);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -927,6 +928,9 @@ SkyRD::~SkyRD() {
 
 	SkyMaterialData *md = static_cast<SkyMaterialData *>(material_storage->material_get_data(sky_shader.default_material, RendererRD::MaterialStorage::SHADER_TYPE_SKY));
 	sky_shader.shader.version_free(md->shader_data->version);
+	// Mark version as freed so SkyShaderData destructor won't try to free it again
+	// (destructor runs after RendererSceneRenderRD::singleton is set to null).
+	md->shader_data->version = RID();
 	RD::get_singleton()->free_rid(sky_scene_state.directional_light_buffer);
 	RD::get_singleton()->free_rid(sky_scene_state.uniform_buffer);
 	memdelete_arr(sky_scene_state.directional_lights);

@@ -1090,3 +1090,7 @@ EditorFeatureProfileManager::EditorFeatureProfileManager() {
 
 	singleton = this;
 }
+
+EditorFeatureProfileManager::~EditorFeatureProfileManager() {
+	singleton = nullptr;
+}

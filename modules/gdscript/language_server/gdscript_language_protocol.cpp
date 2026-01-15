@@ -545,6 +545,11 @@ GDScriptLanguageProtocol::LSPeer::~LSPeer() {
 #define SET_WORKSPACE_METHOD(m_method) set_method(_STR(workspace/m_method), callable_mp(workspace.ptr(), &GDScriptWorkspace::m_method))
 // clang-format on
 
+GDScriptLanguageProtocol::~GDScriptLanguageProtocol() {
+	clients.clear();
+	singleton = nullptr;
+}
+
 GDScriptLanguageProtocol::GDScriptLanguageProtocol() {
 	server.instantiate();
 	singleton = this;

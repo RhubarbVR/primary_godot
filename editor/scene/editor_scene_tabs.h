@@ -105,5 +105,6 @@ public:
 
 	void update_scene_tabs();
 
+	~EditorSceneTabs();
 	EditorSceneTabs();
 };

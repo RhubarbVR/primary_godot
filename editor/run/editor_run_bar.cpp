@@ -538,6 +538,10 @@ void EditorRunBar::_bind_methods() {
 	ADD_SIGNAL(MethodInfo("stop_pressed"));
 }
 
+EditorRunBar::~EditorRunBar() {
+	singleton = nullptr;
+}
+
 EditorRunBar::EditorRunBar() {
 	singleton = this;
 

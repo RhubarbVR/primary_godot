@@ -1764,14 +1764,14 @@ Variant Object::_get_indexed_bind(const NodePath &p_name) const {
 }
 
 void Object::initialize_class() {
-	static bool initialized = false;
-	if (initialized) {
+	static uint8_t initialized = 0xFF;
+	if (initialized == _classdb_classes_initialization_checker()) {
 		return;
 	}
 	_add_class_to_classdb(get_gdtype_static(), nullptr);
 	_bind_methods();
 	_bind_compatibility_methods();
-	initialized = true;
+	initialized = _classdb_classes_initialization_checker();
 }
 
 StringName Object::get_translation_domain() const {
@@ -1842,6 +1842,10 @@ void Object::_clear_internal_resource_paths(const Variant &p_var) {
 		default: {
 		}
 	}
+}
+
+uint8_t Object::_classdb_classes_initialization_checker() {
+	return ClassDB::classes_initialization_checker;
 }
 
 void Object::_add_class_to_classdb(const GDType &p_type, const GDType *p_inherits) {
@@ -2648,6 +2652,9 @@ void ObjectDB::cleanup() {
 	if (object_slots) {
 		memfree(object_slots);
 	}
+	object_slots = nullptr;
+	slot_max = 0;
+	slot_count = 0;
 
 	spin_lock.unlock();
 }

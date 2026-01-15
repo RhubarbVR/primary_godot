@@ -420,11 +420,12 @@ Pair<ShaderRD *, RID> Fog::FogShaderData::get_native_shader_and_version() const 
 Fog::FogShaderData::~FogShaderData() {
 	pipeline.free();
 
+	if (!version.is_valid()) {
+		return; // Already freed or never initialized.
+	}
 	Fog *fog_singleton = Fog::get_singleton();
 	ERR_FAIL_NULL(fog_singleton);
-	if (version.is_valid()) {
-		fog_singleton->volumetric_fog.shader.version_free(version);
-	}
+	fog_singleton->volumetric_fog.shader.version_free(version);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

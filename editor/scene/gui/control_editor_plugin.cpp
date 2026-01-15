@@ -1151,6 +1151,10 @@ ControlEditorToolbar::ControlEditorToolbar() {
 	singleton = this;
 }
 
+ControlEditorToolbar::~ControlEditorToolbar() {
+	singleton = nullptr;
+}
+
 ControlEditorToolbar *ControlEditorToolbar::singleton = nullptr;
 
 // Editor plugin.

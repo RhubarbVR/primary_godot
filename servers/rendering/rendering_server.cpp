@@ -3855,4 +3855,5 @@ void RenderingServer::init() {
 
 RenderingServer::~RenderingServer() {
 	singleton = nullptr;
+	create_func = nullptr;
 }

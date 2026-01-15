@@ -101,5 +101,6 @@ public:
 	void apply_custom_features(int p_instance_idx);
 
 	static RunInstancesDialog *get_singleton() { return singleton; }
+	~RunInstancesDialog();
 	RunInstancesDialog();
 };

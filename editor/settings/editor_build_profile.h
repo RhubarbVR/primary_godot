@@ -210,5 +210,6 @@ public:
 	Ref<EditorBuildProfile> get_current_profile();
 
 	static EditorBuildProfileManager *get_singleton() { return singleton; }
+	~EditorBuildProfileManager();
 	EditorBuildProfileManager();
 };

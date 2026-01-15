@@ -1210,6 +1210,10 @@ void GameView::_feature_profile_changed() {
 	node_type_button[RuntimeNodeSelect::NODE_TYPE_3D]->set_visible(is_3d_enabled);
 }
 
+GameView::~GameView() {
+	singleton = nullptr;
+}
+
 GameView::GameView(Ref<GameViewDebugger> p_debugger, EmbeddedProcessBase *p_embedded_process, WindowWrapper *p_wrapper) {
 	singleton = this;
 

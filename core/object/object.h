@@ -518,8 +518,8 @@ protected:                                                                      
                                                                                                                                             \
 public:                                                                                                                                     \
 	static void initialize_class() {                                                                                                        \
-		static bool initialized = false;                                                                                                    \
-		if (initialized) {                                                                                                                  \
+		static uint8_t initialized = 0xFF;                                                                                                  \
+		if (initialized == _classdb_classes_initialization_checker()) {                                                                       \
 			return;                                                                                                                         \
 		}                                                                                                                                   \
 		m_inherits::initialize_class();                                                                                                     \
@@ -530,7 +530,7 @@ public:                                                                         
 		if (m_class::_get_bind_compatibility_methods() != m_inherits::_get_bind_compatibility_methods()) {                                  \
 			_bind_compatibility_methods();                                                                                                  \
 		}                                                                                                                                   \
-		initialized = true;                                                                                                                 \
+		initialized = _classdb_classes_initialization_checker();                                                                              \
 	}                                                                                                                                       \
                                                                                                                                             \
 protected:                                                                                                                                  \
@@ -792,6 +792,7 @@ protected:
 	friend class ::ClassDB;
 	friend class PlaceholderExtensionInstance;
 
+	static uint8_t _classdb_classes_initialization_checker();
 	static void _add_class_to_classdb(const GDType &p_class, const GDType *p_inherits);
 	static void _get_property_list_from_classdb(const StringName &p_class, List<PropertyInfo> *p_list, bool p_no_inheritance, const Object *p_validator);
 

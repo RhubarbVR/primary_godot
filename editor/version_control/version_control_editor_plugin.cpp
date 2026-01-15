@@ -1536,4 +1536,9 @@ VersionControlEditorPlugin::~VersionControlEditorPlugin() {
 	memdelete(version_commit_dock);
 	memdelete(version_control_dock);
 	memdelete(version_control_actions);
+	version_commit_dock = nullptr;
+	version_control_dock = nullptr;
+	version_control_actions = nullptr;
+
+	singleton = nullptr;
 }

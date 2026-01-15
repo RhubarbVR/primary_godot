@@ -62,6 +62,7 @@ public:
 	static ShaderFileEditor *singleton;
 	void edit(const Ref<RDShaderFile> &p_shader);
 
+	~ShaderFileEditor();
 	ShaderFileEditor();
 };
 

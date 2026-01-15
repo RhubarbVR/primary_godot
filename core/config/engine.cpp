@@ -37,6 +37,7 @@
 #include "core/variant/typed_array.h"
 #include "core/version.h"
 #include "servers/rendering/rendering_device.h"
+#include "core/object/ref_counted.h"
 
 void Engine::_update_time_scale() {
 	_time_scale = _user_time_scale * _game_time_scale;
@@ -430,11 +431,17 @@ bool Engine::is_embedded_in_editor() const {
 	return embedded_in_editor;
 }
 
+void Engine::clean_up_singletons() {
+	singletons.clear();
+}
+
 Engine::Engine() {
 	singleton = this;
 }
 
 Engine::~Engine() {
+	clean_up_singletons();
+
 	if (singleton == this) {
 		singleton = nullptr;
 	}

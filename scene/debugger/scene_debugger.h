@@ -233,6 +233,7 @@ private:
 
 public:
 	static LiveEditor *get_singleton();
+	~LiveEditor();
 };
 
 class RuntimeNodeSelect : public Object {
@@ -438,7 +439,6 @@ private:
 
 public:
 	static RuntimeNodeSelect *get_singleton();
-
 	~RuntimeNodeSelect();
 };
 #endif // DEBUG_ENABLED
