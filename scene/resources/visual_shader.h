@@ -249,6 +249,7 @@ public: // internal methods
 	Vector2 get_graph_offset() const;
 #endif
 
+	String generate_preview_shader_out(Type p_type, int p_node, int p_port, const TypedArray<Dictionary> &p_default_tex_params) const;
 	String generate_preview_shader(Type p_type, int p_node, int p_port, Vector<DefaultTextureParam> &r_default_tex_params) const;
 
 	String validate_port_name(const String &p_port_name, VisualShaderNode *p_node, int p_port_id, bool p_output) const;

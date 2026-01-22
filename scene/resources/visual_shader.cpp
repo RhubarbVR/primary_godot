@@ -1512,6 +1512,26 @@ Vector2 VisualShader::get_graph_offset() const {
 }
 #endif
 
+String VisualShader::generate_preview_shader_out(Type p_type, int p_node, int p_port, const TypedArray<Dictionary> &p_default_tex_params) const {
+	Vector<DefaultTextureParam> tex_params;
+
+    for (int i = 0; i < p_default_tex_params.size(); i++) {
+		Dictionary d = p_default_tex_params[i];
+		DefaultTextureParam param;
+		param.name = d["name"];
+
+		Array textures = d["params"];
+		for (int j = 0; j < textures.size(); j++) {
+			param.params.push_back(textures[j]);
+		}
+
+		tex_params.push_back(param);
+	}
+    
+
+	return generate_preview_shader(p_type, p_node, p_port, tex_params);
+}
+
 String VisualShader::generate_preview_shader(Type p_type, int p_node, int p_port, Vector<DefaultTextureParam> &default_tex_params) const {
 	Ref<VisualShaderNode> node = get_node(p_type, p_node);
 	ERR_FAIL_COND_V(node.is_null(), String());
@@ -3202,6 +3222,8 @@ void VisualShader::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("_has_preview_shader_parameter", "name"), &VisualShader::_has_preview_shader_parameter);
 
 	ClassDB::bind_method(D_METHOD("_update_shader"), &VisualShader::_update_shader);
+
+	ClassDB::bind_method(D_METHOD("preview_shader", "type", "node", "port", "default_tex_params"), &VisualShader::generate_preview_shader_out);
 
 #ifndef DISABLE_DEPRECATED
 	ClassDB::bind_method(D_METHOD("set_graph_offset", "offset"), &VisualShader::set_graph_offset);
