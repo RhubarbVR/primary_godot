@@ -418,6 +418,9 @@ MainLoop *OS_MacOS::get_main_loop() const {
 }
 
 String OS_MacOS::get_config_path() const {
+	if (!custom_config_dir.is_empty()) {
+		return custom_config_dir;
+	}
 	if (has_environment("HOME")) {
 		return get_environment("HOME").path_join("Library/Application Support");
 	}
@@ -425,10 +428,16 @@ String OS_MacOS::get_config_path() const {
 }
 
 String OS_MacOS::get_data_path() const {
+	if (!custom_user_dir.is_empty()) {
+		return custom_user_dir;
+	}
 	return get_config_path();
 }
 
 String OS_MacOS::get_cache_path() const {
+	if (!custom_cache_dir.is_empty()) {
+		return custom_cache_dir;
+	}
 	if (has_environment("HOME")) {
 		return get_environment("HOME").path_join("Library/Caches");
 	}
@@ -436,6 +445,9 @@ String OS_MacOS::get_cache_path() const {
 }
 
 String OS_MacOS::get_temp_path() const {
+	if (!custom_temp_dir.is_empty()) {
+		return custom_temp_dir;
+	}
 	static String ret;
 	if (ret.is_empty()) {
 		NSURL *url = [NSURL fileURLWithPath:NSTemporaryDirectory()

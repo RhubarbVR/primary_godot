@@ -1456,7 +1456,29 @@ Error Main::setup(const char *execpath, int argc, char *argv[], bool p_second_ph
 			OS::get_singleton()->print("--embedded is only supported on macOS, aborting.\n");
 			goto error;
 #endif
-		} else if (arg == "--log-file") { // write to log file
+		}
+		else if (arg == "--user-dir") {
+			if (N) {
+				OS::get_singleton()->set_custom_user_dir(N->get());
+				N = N->next();
+			}
+		} else if (arg == "--cache-dir") {
+			if (N) {
+				OS::get_singleton()->set_custom_cache_dir(N->get());
+				N = N->next();
+			}
+		} else if (arg == "--temp-dir") {
+			if (N) {
+				OS::get_singleton()->set_custom_temp_dir(N->get());
+				N = N->next();
+			}
+		} else if (arg == "--config-dir") {
+			if (N) {
+				OS::get_singleton()->set_custom_config_dir(N->get());
+				N = N->next();
+			}
+		}
+		else if (arg == "--log-file") { // write to log file
 
 			if (N) {
 				log_file = N->get();

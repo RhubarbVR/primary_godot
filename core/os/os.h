@@ -127,6 +127,18 @@ protected:
 
 	virtual bool _check_internal_feature_support(const String &p_feature) = 0;
 
+protected:
+	String custom_user_dir;
+	String custom_config_dir;
+	String custom_temp_dir;
+	String custom_cache_dir;
+
+public:
+	void set_custom_user_dir(const String &p_dir);
+	void set_custom_cache_dir(const String &p_dir);
+	void set_custom_temp_dir(const String &p_dir);
+	void set_custom_config_dir(const String &p_dir);
+
 public:
 	typedef int64_t ProcessID;
 

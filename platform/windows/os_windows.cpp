@@ -2408,6 +2408,9 @@ uint64_t OS_Windows::get_embedded_pck_offset() const {
 }
 
 String OS_Windows::get_config_path() const {
+	if (!custom_config_dir.is_empty()) {
+		return custom_config_dir;
+	}
 	if (has_environment("APPDATA")) {
 		return get_environment("APPDATA").replace_char('\\', '/');
 	}
@@ -2415,23 +2418,36 @@ String OS_Windows::get_config_path() const {
 }
 
 String OS_Windows::get_data_path() const {
+	if (!custom_user_dir.is_empty()) {
+		return custom_user_dir;
+	}
 	return get_config_path();
 }
 
 String OS_Windows::get_cache_path() const {
+	if (!custom_cache_dir.is_empty()) {
+		return custom_cache_dir;
+	}
 	static String cache_path_cache;
 	if (cache_path_cache.is_empty()) {
-		if (has_environment("LOCALAPPDATA")) {
-			cache_path_cache = get_environment("LOCALAPPDATA").replace_char('\\', '/');
-		}
-		if (cache_path_cache.is_empty()) {
-			cache_path_cache = get_temp_path();
+		if (!custom_cache_dir.is_empty()) {
+			cache_path_cache = custom_cache_dir;
+		} else {
+			if (has_environment("LOCALAPPDATA")) {
+				cache_path_cache = get_environment("LOCALAPPDATA").replace_char('\\', '/');
+			}
+			if (cache_path_cache.is_empty()) {
+				cache_path_cache = get_temp_path();
+			}
 		}
 	}
 	return cache_path_cache;
 }
 
 String OS_Windows::get_temp_path() const {
+	if (!custom_temp_dir.is_empty()) {
+		return custom_temp_dir;
+	}
 	static String temp_path_cache;
 	if (temp_path_cache.is_empty()) {
 		{
@@ -2499,6 +2515,9 @@ String OS_Windows::get_system_dir(SystemDir p_dir, bool p_shared_storage) const 
 }
 
 String OS_Windows::get_user_data_dir(const String &p_user_dir) const {
+	if (!custom_user_dir.is_empty()) {
+		return custom_user_dir;
+	}
 	return get_data_path().path_join(p_user_dir).replace_char('\\', '/');
 }
 

@@ -297,20 +297,32 @@ String OS::get_godot_dir_name() const {
 
 // OS equivalent of XDG_DATA_HOME
 String OS::get_data_path() const {
+	if (!custom_user_dir.is_empty()) {
+		return custom_user_dir;
+	}
 	return ".";
 }
 
 // OS equivalent of XDG_CONFIG_HOME
 String OS::get_config_path() const {
+	if (!custom_config_dir.is_empty()) {
+		return custom_config_dir;
+	}
 	return ".";
 }
 
 // OS equivalent of XDG_CACHE_HOME
 String OS::get_cache_path() const {
+	if (!custom_cache_dir.is_empty()) {
+		return custom_cache_dir;
+	}
 	return ".";
 }
 
 String OS::get_temp_path() const {
+	if (!custom_temp_dir.is_empty()) {
+		return custom_temp_dir;
+	}
 	return ".";
 }
 
@@ -329,12 +341,34 @@ String OS::get_bundle_icon_name() const {
 	return String();
 }
 
+void OS::set_custom_user_dir(const String &p_dir) {
+	custom_user_dir = p_dir;
+}
+
+void OS::set_custom_cache_dir(const String &p_dir) {
+	custom_cache_dir = p_dir;
+}
+
+void OS::set_custom_config_dir(const String &p_dir) {
+	custom_config_dir = p_dir;
+}
+
+void OS::set_custom_temp_dir(const String &p_dir) {
+	custom_temp_dir = p_dir;	
+}
+
 // OS specific path for user://
 String OS::get_user_data_dir(const String &p_user_dir) const {
+	if (!custom_user_dir.is_empty()) {
+		return custom_user_dir;
+	}
 	return ".";
 }
 
 String OS::get_user_data_dir() const {
+	if (!custom_user_dir.is_empty()) {
+		return custom_user_dir;
+	}
 	String appname = get_safe_dir_name(GLOBAL_GET("application/config/name"));
 	if (!appname.is_empty()) {
 		bool use_custom_dir = GLOBAL_GET("application/config/use_custom_user_dir");

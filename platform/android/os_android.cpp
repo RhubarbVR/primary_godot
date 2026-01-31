@@ -469,6 +469,9 @@ String OS_Android::get_model_name() const {
 }
 
 String OS_Android::get_data_path() const {
+	if (!custom_user_dir.is_empty()) {
+		return custom_user_dir;
+	}
 	return OS::get_user_data_dir();
 }
 
@@ -709,6 +712,9 @@ String OS_Android::get_executable_path() const {
 }
 
 String OS_Android::get_user_data_dir(const String &p_user_dir) const {
+	if (!custom_user_dir.is_empty()) {
+		return custom_user_dir;
+	}
 	if (!data_dir_cache.is_empty()) {
 		return data_dir_cache;
 	}
@@ -726,6 +732,10 @@ String OS_Android::get_dynamic_libraries_path() const {
 }
 
 String OS_Android::get_cache_path() const {
+	if (!custom_cache_dir.is_empty()) {
+		return custom_cache_dir;
+	}
+
 	if (!cache_dir_cache.is_empty()) {
 		return cache_dir_cache;
 	}
@@ -739,6 +749,10 @@ String OS_Android::get_cache_path() const {
 }
 
 String OS_Android::get_temp_path() const {
+	if (!custom_temp_dir.is_empty()) {
+		return custom_temp_dir;
+	}
+
 	if (!temp_dir_cache.is_empty()) {
 		return temp_dir_cache;
 	}
@@ -825,6 +839,9 @@ void OS_Android::vibrate_handheld(int p_duration_ms, float p_amplitude) {
 }
 
 String OS_Android::get_config_path() const {
+	if (!custom_config_dir.is_empty()) {
+		return custom_config_dir;
+	}
 	return OS::get_user_data_dir().path_join("config");
 }
 

@@ -890,6 +890,9 @@ String OS_LinuxBSD::get_system_font_path(const String &p_font_name, int p_weight
 }
 
 String OS_LinuxBSD::get_config_path() const {
+	if (!custom_config_dir.is_empty()) {
+		return custom_config_dir;
+	}
 	if (has_environment("XDG_CONFIG_HOME")) {
 		if (get_environment("XDG_CONFIG_HOME").is_absolute_path()) {
 			return get_environment("XDG_CONFIG_HOME");
@@ -905,6 +908,9 @@ String OS_LinuxBSD::get_config_path() const {
 }
 
 String OS_LinuxBSD::get_data_path() const {
+	if (!custom_user_dir.is_empty()) {
+		return custom_user_dir;
+	}
 	if (has_environment("XDG_DATA_HOME")) {
 		if (get_environment("XDG_DATA_HOME").is_absolute_path()) {
 			return get_environment("XDG_DATA_HOME");
@@ -920,6 +926,10 @@ String OS_LinuxBSD::get_data_path() const {
 }
 
 String OS_LinuxBSD::get_cache_path() const {
+	if (!custom_cache_dir.is_empty()) {
+		return custom_cache_dir;
+	}
+
 	if (has_environment("XDG_CACHE_HOME")) {
 		if (get_environment("XDG_CACHE_HOME").is_absolute_path()) {
 			return get_environment("XDG_CACHE_HOME");

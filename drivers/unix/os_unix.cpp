@@ -316,6 +316,9 @@ String OS_Unix::get_version() const {
 }
 
 String OS_Unix::get_temp_path() const {
+	if (!custom_temp_dir.is_empty()) {
+		return custom_temp_dir;
+	}
 	return "/tmp";
 }
 
@@ -1138,6 +1141,9 @@ void OS_Unix::unset_environment(const String &p_var) const {
 }
 
 String OS_Unix::get_user_data_dir(const String &p_user_dir) const {
+	if (!custom_user_dir.is_empty()) {
+		return custom_user_dir;
+	}
 	return get_data_path().path_join(p_user_dir);
 }
 
